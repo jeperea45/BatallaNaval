@@ -27,7 +27,7 @@ def colocarBarcos(tablero, barcos, jugador):
                 elif jugador == "jugador":
                     print("Colocación invalida. Intente de nuevo")
                     
-def validarColocacion(tablero, fila, columna, dimension, orientacion):
+def validarColocado(tablero, fila, columna, dimension, orientacion):
     if orientacion == 'h':
         if columna + dimension > len(tablero):
             return False
