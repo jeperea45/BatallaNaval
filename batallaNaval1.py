@@ -21,4 +21,9 @@ def colocarBarcos(tablero, barcos, jugador):
                 columna = int(input("Ingrese la columna: "))
                 orientacion = int(input("Ingrese la orientación (h para horizontal, v para vertical): ")).lower()
                 
+                if validarColocado(tablero, fila, columna, barco['dimension'], orientacion):
+                    colocarBarcos(tablero, fila, columna, barco['dimension'], orientacion)
+                    colocado = True
+                elif jugador == "jugador":
+                    print("Colocación invalida. Intente de nuevo")
     
