@@ -26,4 +26,19 @@ def colocarBarcos(tablero, barcos, jugador):
                     colocado = True
                 elif jugador == "jugador":
                     print("Colocación invalida. Intente de nuevo")
+                    
+def validarColocacion(tablero, fila, columna, dimension, orientacion):
+    if orientacion == 'h':
+        if columna + dimension > len(tablero):
+            return False
+        for i in range(dimension):
+            if tablero[fila][columna+i] != "~":
+                return False
+    else:
+        if fila + dimension > len(tablero):
+            return False
+        for i in range(dimension):
+            if tablero[fila+i][columna] != "~":
+                return False
+    return True
     
