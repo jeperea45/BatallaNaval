@@ -101,3 +101,42 @@ def jugarContraComputadora():
                 print("La computadora gano")
                 return "Computadora"
     turnoJugador = not turnoJugador
+    
+def jugarDosJugadores():
+    dimension = 5
+    tableroJugador1 = crearTablero(dimension)
+    tableroJugador2 = crearTablero(dimension)
+    tableroDisparosJugador1 = crearTablero(dimension)
+    tableroDisparosJugador2 = crearTablero(dimension)
+    barcos = [
+        {"nombre": "PortaAviones", "dimension": 3},
+        {"nombre": "SubMarino", "dimension": 2}
+    ]
+    print("Jugador 1 Coloca tus barcos")
+    colocarBarcos(tableroJugador1, barcos, "Jugador")
+    print("Jugador 2 Coloca tus barcos")
+    colocarBarcos(tableroJugador2, barcos, "Jugador")
+    turnoJugador1 = True
+    while True:
+        if turnoJugador1:
+            print("\nTurno jugador 1")
+            mostrartTableros(tableroDisparosJugador1, tableroDisparosJugador2)
+            fila = int(input("Ingrese la fila de disparo: "))
+            columna = int(input("Ingresa la columna de disparo: "))
+            resultado = realizarDisparo(tableroJugador2, tableroDisparosJugador1, fila, columna)
+            print(resultado)
+            if verificarVictoria(tableroJugador2):
+                print("Jugador 1 gano")
+                return "Jugador 1"
+        else:
+            print("\n Turno del jugador 2")
+            mostrartTableros(tableroDisparosJugador2, tableroDisparosJugador1)
+            fila = int(input("Ingrese la fila de disparo: "))
+            columna = int(input("Ingresa la columna de disparo: "))
+            resultado = realizarDisparo(tableroJugador1, tableroDisparosJugador2, fila, columna)
+            print(resultado)
+            if verificarVictoria(tableroJugador1):
+                print("Jugador 2 gano")
+                return "Jugador 2"
+    turnoJugador1 = not turnoJugador
+    
