@@ -45,10 +45,10 @@ def validarColocado(tablero, fila, columna, dimension, orientacion):
 def colocarBarco(tablero, fila, columna, dimension, orientacion):
     if orientacion == 'h':
         for i in range(dimension):
-            tablero[fila][columna+i]="B"
+            tablero[fila][columna+i] = "B"
     else:
         for i in range(dimension):
-            tablero[fila+i][columna]="B"
+            tablero[fila+i][columna] = "B"
             
 def realizarDisparo(tableroOculto, tableroDisparos, fila, columna):
     if tableroOculto[fila][columna] == "B":
@@ -66,3 +66,38 @@ def verificarVictoria(tableroOculto):
             return False
     return True
             
+def jugarContraComputadora():
+    dimension = 5
+    tableroJugador = crearTablero(dimension)
+    tableroComputadora = crearTablero(dimension)
+    tableroDisparosJugador = crearTablero(dimension)
+    tableroDisparosComputadora = crearTablero(dimension)
+    barcos = [
+        {"nombre": "PortaAviones", "dimension": 3},
+        {"nombre": "SubMarino", "dimension": 2}
+    ]
+    print("Coloca tus barcos")
+    colocarBarcos(tableroJugador, barcos, "Jugador")
+    colocarBarcos(tableroComputadora, barcos, "Computadora")
+    turnoJugador = True
+    while True:
+        if turnoJugador:
+            print("\nTu turno")
+            mostrartTableros(tableroDisparosJugador, tableroDisparosComputadora)
+            fila = int(input("Ingrese la fila de disparo: "))
+            columna = int(input("Ingresa la columna de disparo: "))
+            resultado = realizarDisparo(tableroComputadora, tableroDisparosJugador, fila, columna)
+            print(resultado)
+            if verificarVictoria(tableroComputadora):
+                print("Ganaste")
+                return "Jugador"
+        else:
+            print("\n Turno de la computadora")
+            fila = random.radiant(0, dimension -1)
+            columna = random.radiant(0, dimension -1)
+            resultado = realizarDisparo(tableroJugador, tableroDisparosComputadora, fila, columna)
+            print(f"La computadora disparo en ({fila}, {columna}): {resultado} ")
+            if verificarVictoria(tableroJugador):
+                print("La computadora gano")
+                return "Computadora"
+    turnoJugador = not turnoJugador
