@@ -60,4 +60,9 @@ def realizarDisparo(tableroOculto, tableroDisparos, fila, columna):
         return "Agua"
     return "Ya disparaste aquí"
     
+def verificarVictoria(tableroOculto):
+    for fila in tableroOculto:
+        if "B" in fila:
+            return False
+    return True
             
