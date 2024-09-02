@@ -4,7 +4,7 @@ def crearTablero(dimension):
     return [["~" for _ in range(dimension)] for _ in range(dimension)]
 
 def mostrarTableros(tableroDisparosJugador, tableroDisparosOponente):
-    print("\n Tablero de Disparos: ")
+    print("\n Tablero de Disparos del Jugador: ")
     for fila in tableroDisparosJugador:
         print(" ".join(fila))
     print("\n Tablero de Disparos del oponente: ")
@@ -13,54 +13,58 @@ def mostrarTableros(tableroDisparosJugador, tableroDisparosOponente):
 
 def colocarBarcos(tablero, barcos, jugador):
     for barco in barcos:
-        colocando = False
-        while not colocando:
+        colocado = False
+        while not colocado:
             if jugador == "jugador":
-                print(f"Colocando {barco ['nombre']} de tamaño {barco ['dimension']}")
-                fila= int(input("Ingrese la columna: "))
-                orientacion = input("Ingrese la orientacion (h para horizontal, v para vertical): ").lower()
+                print(f"Colocando {barco['nombre']} de tamaño {barco['dimension']}")
+                fila = int(input("Ingrese la fila: "))
+                columna = int(input("Ingrese la columna: "))
+                orientacion = input("Ingrese la orientación (h para horizontal, v para vertical): ").lower()
             else:
-                fila = random.randint(0, len(tablero)-1)
-                columna = random.randint(0, len(tablero)-1)
+                fila = random.randint(0, len(tablero) - 1)
+                columna = random.randint(0, len(tablero) - 1)
                 orientacion = random.choice(['h', 'v'])
+
             if validarColocacion(tablero, fila, columna, barco['dimension'], orientacion):
-                colocarBarcos(tablero, fila, columna, barco ['dimension'], orientacion)
-                colocando = True
-            elif jugador == "judador":
-                print("Colocacion es invalida, intenta de nuevo")
+                colocarBarco(tablero, fila, columna, barco['dimension'], orientacion)
+                colocado = True
+            elif jugador == "jugador":
+                print("Colocación inválida, intenta de nuevo.")
 
 def validarColocacion(tablero, fila, columna, dimension, orientacion):
     if orientacion == 'h':
         if columna + dimension > len(tablero):
             return False
         for i in range(dimension):
-            if tablero[fila][columna+i] != "~":
+            if tablero[fila][columna + i] != "~":
                 return False
     else:
         if fila + dimension > len(tablero):
             return False
         for i in range(dimension):
-            if tablero[fila+i][columna] != "~":
+            if tablero[fila + i][columna] != "~":
                 return False
     return True
 
 def colocarBarco(tablero, fila, columna, dimension, orientacion):
     if orientacion == 'h':
         for i in range(dimension):
-            tablero[fila][columna+i]="B"
+            tablero[fila][columna + i] = "B"
     else:
         for i in range(dimension):
-            tablero[fila+i][columna]="B"
+            tablero[fila + i][columna] = "B"
 
 def realizarDisparo(tableroOculto, tableroDisparos, fila, columna):
+    if tableroDisparos[fila][columna] != "~":
+        return "Ya disparaste aquí."
+    
     if tableroOculto[fila][columna] == "B":
-        tableroDisparos[fila][columna == "X"]
-        tableroOculto[fila][columna] == "H"
-        return "Impacto"
-    elif tableroDisparos[fila][columna] == "~":
-        tableroOculto[fila][columna] == "O"
-        return "Agua"
-    return "Ya disparaste aqui"
+        tableroDisparos[fila][columna] = "X"
+        tableroOculto[fila][columna] = "H"
+        return "¡Impacto!"
+    else:
+        tableroDisparos[fila][columna] = "O"
+        return "Agua."
 
 def verificarVictoria(tableroOculto):
     for fila in tableroOculto:
@@ -75,34 +79,34 @@ def jugarContraComputador():
     tableroDisparosJugador = crearTablero(dimension)
     tableroDisparosComputadora = crearTablero(dimension)
     barcos = [
-        {"nombre":"Potaaviones", "dimension":3},
-        {"nombre":"Submarino", "dimension":2}
+        {"nombre": "Portaaviones", "dimension": 3},
+        {"nombre": "Submarino", "dimension": 2}
     ]
     print("Coloca tus barcos")
     colocarBarcos(tableroJugador, barcos, "jugador")
-    colocarBarcos(tableroComputadora, barcos, "Computadora")
-    turnoJugador=True
+    colocarBarcos(tableroComputadora, barcos, "computadora")
+    turnoJugador = True
     while True:
         if turnoJugador:
             print("\nTu turno")
             mostrarTableros(tableroDisparosJugador, tableroDisparosComputadora)
-            fila = int(input("Ingresa la fila del disparo "))
+            fila = int(input("Ingresa la fila del disparo: "))
             columna = int(input("Ingresa la columna del disparo: "))
-            resultado =realizarDisparo(tableroComputadora, tableroDisparosJugador, fila, columna)
+            resultado = realizarDisparo(tableroComputadora, tableroDisparosJugador, fila, columna)
             print(resultado)
             if verificarVictoria(tableroComputadora):
-                print("Ganaste")
+                print("¡Ganaste!")
                 return "Jugador"
         else:
-            print("\n Turno de la computadora")
-            fila = random.randint(0, dimension-1)
-            columna = random.randint(0, dimension-1)
+            print("\nTurno de la computadora")
+            fila = random.randint(0, dimension - 1)
+            columna = random.randint(0, dimension - 1)
             resultado = realizarDisparo(tableroJugador, tableroDisparosComputadora, fila, columna)
-            print(f"La computadora disparo en ({fila}), {columna}): {resultado} ")
+            print(f"La computadora disparó en ({fila}, {columna}): {resultado}")
             if verificarVictoria(tableroJugador):
-                print("La computadora gano")
+                print("La computadora ganó")
                 return "Computadora"
-    turnoJugador = not turnoJugador
+        turnoJugador = not turnoJugador
 
 def jugarDosJugadores():
     dimension = 5
@@ -144,12 +148,12 @@ def jugarDosJugadores():
             print(resultado)
             if verificarVictoria(tableroJugador1):
                 print("¡Jugador 2 ganó!")
-                return "Jugador 2"  
-    turnoJugador1 = not turnoJugador1
+                return "Jugador 2"
+        turnoJugador1 = not turnoJugador1
 
 def mostrarMenu():
     print("Bienvenido a Batalla Naval!!! ")
-    print("Selecciona contra quien jugaras ")
+    print("Selecciona contra quién jugarás ")
     print("1. Contra Computadora ")
     print("2. Contra otro Jugador ")
     print("3. Salir ")
@@ -157,18 +161,22 @@ def mostrarMenu():
 def iniciarJuego():
     while True:
         mostrarMenu()
-        modo = input("Elige una opcion:  ")
+        modo = input("Elige una opción: ")
         if modo == "1":
             ganador = jugarContraComputador()
         elif modo == "2":
             ganador = jugarDosJugadores()
         elif modo == "3":
-            print("Gracias por jugar con Pio Pio")
+            print("Gracias por jugar. Hasta la vista, baby.")
+            break
         else:
-            print("Opcion no valida, por favor elige una opcion correcta")
+            print("Opción no válida, por favor elige una opción correcta")
+            continue
+
         print(f"El ganador es {ganador}")
-        jugarDeNuevo = input("Quieres jugar de nuevo? (s/n)").lower()
-        if jugarDeNuevo !="s":
-            print("Gracias por jugar, Hasta la vista Baby")
+        jugarDeNuevo = input("¿Quieres jugar de nuevo? (s/n): ").lower()
+        if jugarDeNuevo != "s":
+            print("Gracias por jugar, ¡hasta la próxima!")
+            break
 
 iniciarJuego()
