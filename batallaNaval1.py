@@ -49,4 +49,15 @@ def colocarBarco(tablero, fila, columna, dimension, orientacion):
     else:
         for i in range(dimension):
             tablero[fila+i][columna]="B"
+            
+def realizarDisparo(tableroOculto, tableroDisparos, fila, columna):
+    if tableroOculto[fila][columna] == "B":
+        tableroDisparos[fila][columna] == "X"
+        tableroOculto[fila][columna] == "H"
+        return "Impacto"
+    elif tableroDisparos[fila][columna] == "~":
+        tableroOculto[fila][columna] == "O"
+        return "Agua"
+    return "Ya disparaste aquí"
     
+            
