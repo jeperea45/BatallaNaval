@@ -41,4 +41,12 @@ def validarColocado(tablero, fila, columna, dimension, orientacion):
             if tablero[fila+i][columna] != "~":
                 return False
     return True
+
+def colocarBarco(tablero, fila, columna, dimension, orientacion):
+    if orientacion == 'h':
+        for i in range(dimension):
+            tablero[fila][columna+i]="B"
+    else:
+        for i in range(dimension):
+            tablero[fila+i][columna]="B"
     
