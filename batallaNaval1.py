@@ -132,8 +132,21 @@ def jugarDosJugadores():
         if turnoJugador1:
             print("\nTurno Jugador 1")
             mostrarTableros(tableroDisparosJugador1, tableroDisparosJugador2)
-            fila = int(input("Ingresa la fila del disparo: "))
-            columna = int(input("Ingresa la columna del disparo: "))
+            
+            # Validación de entrada para fila de disparo
+            fila = input("Jugador 1, ingresa la fila del disparo (0-4): ")
+            while not (fila.isdigit() and 0 <= int(fila) < dimension):
+                print("Fila fuera de rango o inválida. Debe ser un número entre 0 y 4.")
+                fila = input("Jugador 1, ingresa la fila del disparo (0-4): ")
+            fila = int(fila)
+            
+            # Validación de entrada para columna de disparo
+            columna = input("Jugador 1, ingresa la columna del disparo (0-4): ")
+            while not (columna.isdigit() and 0 <= int(columna) < dimension):
+                print("Columna fuera de rango o inválida. Debe ser un número entre 0 y 4.")
+                columna = input("Jugador 1, ingresa la columna del disparo (0-4): ")
+            columna = int(columna)
+
             resultado = realizarDisparo(tableroJugador2, tableroDisparosJugador1, fila, columna)
             print(resultado)
             if verificarVictoria(tableroJugador2):
@@ -142,14 +155,29 @@ def jugarDosJugadores():
         else:
             print("\nTurno Jugador 2")
             mostrarTableros(tableroDisparosJugador2, tableroDisparosJugador1)
-            fila = int(input("Ingresa la fila del disparo: "))
-            columna = int(input("Ingresa la columna del disparo: "))
+            
+            # Validación de entrada para fila de disparo
+            fila = input("Jugador 2, ingresa la fila del disparo (0-4): ")
+            while not (fila.isdigit() and 0 <= int(fila) < dimension):
+                print("Fila fuera de rango o inválida. Debe ser un número entre 0 y 4.")
+                fila = input("Jugador 2, ingresa la fila del disparo (0-4): ")
+            fila = int(fila)
+            
+            # Validación de entrada para columna de disparo
+            columna = input("Jugador 2, ingresa la columna del disparo (0-4): ")
+            while not (columna.isdigit() and 0 <= int(columna) < dimension):
+                print("Columna fuera de rango o inválida. Debe ser un número entre 0 y 4.")
+                columna = input("Jugador 2, ingresa la columna del disparo (0-4): ")
+            columna = int(columna)
+
             resultado = realizarDisparo(tableroJugador1, tableroDisparosJugador2, fila, columna)
             print(resultado)
             if verificarVictoria(tableroJugador1):
                 print("¡Jugador 2 ganó!")
                 return "Jugador 2"
+        
         turnoJugador1 = not turnoJugador1
+
 
 def mostrarMenu():
     print("Bienvenido a Batalla Naval!!! ")
