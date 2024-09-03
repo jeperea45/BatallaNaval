@@ -60,7 +60,7 @@ def realizarDisparo(tableroOculto, tableroDisparos, fila, columna):
     
     if tableroOculto[fila][columna] == "B":
         tableroDisparos[fila][columna] = "X"
-        tableroOculto[fila][columna] = "H"
+        tableroDisparos[fila][columna] = "H"
         return "¡Impacto!"
     else:
         tableroDisparos[fila][columna] = "O"
